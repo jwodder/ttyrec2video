@@ -1,0 +1,4 @@
+blessed
+click ~= 6.5
+colored
+pyte ~= 0.6.0
