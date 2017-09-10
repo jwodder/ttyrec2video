@@ -24,6 +24,7 @@ Options:
     - cursor color
     - type of cursor (block, bar, or underscore)
     - whether to blink the cursor?
+    - whether to use bright colors for bold text
 - playback speed
 - control of how bells are rendered?
     - pitch
@@ -43,9 +44,9 @@ Terminal interface for ttyrec playback with commands for the following:
 
 - jumping to a given frame
 - jumping to a given timestamp
-- showing the current frame number, timestamp, and file offset
-- going back a frame
-- dumping the current screen to a file (with or without ANSI sequences)
-- quitting
 - jumping ahead/backwards a given number of frames
 - jumping ahead/backwards a given amount of time
+- going back a frame
+- showing the current frame number, timestamp, and file offset
+- dumping the current screen to a file (with or without ANSI sequences)
+- quitting

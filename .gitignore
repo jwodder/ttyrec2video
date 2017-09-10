@@ -7,7 +7,7 @@
 .tox/
 __pycache__/
 build/
+data/
 dist/
 docs/_build/
-ttyrecs/
 venv/

@@ -1,4 +1,5 @@
 blessed
 click ~= 6.5
 colored
+Pillow == 4.*
 pyte ~= 0.6.0
