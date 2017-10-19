@@ -15,7 +15,7 @@ FONT = ImageFont.truetype('data/fonts/unifont.ttf', size=FONT_SIZE)
 BOLD_FONT = ImageFont.truetype('data/fonts/unifont.ttf', size=FONT_SIZE)
 
 CWIDTH  = FONT.getsize('X')[0]
-CHEIGHT = FONT_SIZE
+CHEIGHT = FONT_SIZE * 6 // 5
 
 FG = {}
 FG.update({

@@ -35,6 +35,7 @@ Options:
 - `-v`, `--verbose` — Instead of showing a progress bar, print
   "Processing|Skipping frame N (N-N bytes, YYYY-MM-DD HH:MM:SS) ..." upon
   processing each frame
+- handling of nulls in output?
 
 --------------------------------------------------------------------------------
 
