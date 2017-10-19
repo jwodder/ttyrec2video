@@ -1,3 +1,4 @@
+attrs ~= 17.01
 blessed
 click ~= 6.5
 colored

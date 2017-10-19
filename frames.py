@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 import sys
-from   blessed     import Terminal
+from   blessed         import Terminal
 import click
-from   colored     import attr, fg, bg
+from   colored         import attr, fg, bg
 import pyte
-from   read_ttyrec import read_ttyrec
+from   lib.read_ttyrec import read_ttyrec
 
 FG = {}
 FG.update({v: fg(k-30) for k,v in pyte.graphics.FG.items()})
