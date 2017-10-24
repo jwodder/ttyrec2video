@@ -1,8 +1,7 @@
 #!/usr/bin/python3
-__requires__ = ['pyte ~= 0.6.0']
-import sys
+import sys; sys.path.insert(1, sys.path[0] + '/..')
 import pyte
-from   read_ttyrec import read_ttyrec
+from   lib.read_ttyrec import read_ttyrec
 
 recfile, frameno = sys.argv[1:]
 frameno = int(frameno)

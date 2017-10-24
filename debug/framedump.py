@@ -1,6 +1,7 @@
 #!/usr/bin/python3
+import sys; sys.path.insert(1, sys.path[0] + '/..')
 import click
-from   read_ttyrec import read_ttyrec
+from   lib.read_ttyrec import read_ttyrec
 
 @click.command()
 @click.option('-E', '--encoding', default='utf-8')

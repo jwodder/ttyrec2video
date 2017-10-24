@@ -1,5 +1,7 @@
 *.egg
 *.egg-info/
+*.mp4
+*.png
 *.pyc
 .cache/
 .coverage

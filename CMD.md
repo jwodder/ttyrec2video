@@ -1,7 +1,8 @@
-    ttyrec2mpeg [<options>] <infile>[.gz|.bz2] [<outfile>]
+    ttyrec2mp4 [<options>] <infile>[.gz|.bz2] [<outfile>]
 
-`<outfile>` defaults to `<infile>` with file extension changed to `.mpeg` (or
-`.mp4`?).
+`<outfile>` defaults to `<infile>` with file extension changed to `.mp4`
+
+Support `<infile>` being an HTTP(S) URL
 
 Options:
 
@@ -13,6 +14,8 @@ Options:
   from start
 - `--end <>` — end at a given frame number, timestamp, or temporal offset from
   end
+- `--duration <>` — end at a given offset from `--start`; mutually exclusive
+  with `--end`
 - `--font <???>`
 - `--config <file>` — config file (YAML? INI?); supports defining the
   following:
@@ -36,6 +39,7 @@ Options:
   "Processing|Skipping frame N (N-N bytes, YYYY-MM-DD HH:MM:SS) ..." upon
   processing each frame
 - handling of nulls in output?
+- FPS
 
 --------------------------------------------------------------------------------
 
