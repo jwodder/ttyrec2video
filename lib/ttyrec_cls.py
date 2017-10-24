@@ -1,6 +1,6 @@
 import attr
 import pyte
-from   read_ttyrec import read_ttyrec
+from   .read_ttyrec import read_ttyrec
 
 @attr.s
 class TTYRec(object):
