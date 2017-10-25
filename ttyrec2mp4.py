@@ -26,7 +26,7 @@ def main(ttyrec, encoding, outfile, size):
     frames = []
     frame_times = []
     start_time = None
-    for ts, data, _, _, _ in read_ttyrec(ttyrec, encoding=encoding):
+    for ts, data, *_ in read_ttyrec(ttyrec, encoding=encoding):
         if start_time is None:
             start_time = ts
         stream.feed(data)

@@ -3,10 +3,10 @@ from   datetime    import datetime
 from   functools   import partial
 import struct
 
-Frame = namedtuple('Frame', 'timestamp data index start end')
+Frame = namedtuple('Frame', 'timestamp data index start end duration')
 
 def read_ttyrec(fp, encoding=None, errors=None):
-    prev_end = 0
+    prev = None
     for i, header in enumerate(iter(partial(fp.read, 12), b'')):
         sec, usec, size = struct.unpack('<3I', header)
         dt = datetime.fromtimestamp(sec).replace(microsecond=usec)
@@ -15,9 +15,21 @@ def read_ttyrec(fp, encoding=None, errors=None):
             raise ValueError  ###
         if encoding is not None:
             data = data.decode(encoding, errors or 'strict')
-        here = prev_end + 12 + size
-        yield Frame(timestamp=dt, data=data, index=i, start=prev_end, end=here)
-        prev_end = here
+        if prev is not None:
+            yield prev._replace(duration=dt-prev.timestamp)
+            prev_end = prev.end
+        else:
+            prev_end = 0
+        prev = Frame(
+            timestamp=dt,
+            data=data,
+            index=i,
+            start=prev_end,
+            end=prev_end + 12 + size,
+            duration=None,
+        )
+    if prev is not None:
+        yield prev
 
 def read_frame(fp, encoding=None, errors=None):
     start = fp.tell() if fp.seekable() else None
@@ -29,4 +41,5 @@ def read_frame(fp, encoding=None, errors=None):
     if encoding is not None:
         data = data.decode(encoding, errors or 'strict')
     end = fp.tell() if fp.seekable() else None
-    return Frame(timestamp=dt, data=data, index=None, start=start, end=end)
+    return Frame(timestamp=dt, data=data, index=None, start=start, end=end,
+                 duration=None)

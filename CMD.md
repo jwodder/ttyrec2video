@@ -40,6 +40,7 @@ Options:
   processing each frame
 - handling of nulls in output?
 - FPS
+- how long the final frame should be displayed for?
 
 --------------------------------------------------------------------------------
 
