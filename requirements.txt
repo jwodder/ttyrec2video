@@ -2,6 +2,7 @@ attrs ~= 17.01
 blessed
 click ~= 6.5
 colored
-moviepy ~= 0.2.3
+imageio ~= 2.1
+numpy
 Pillow == 4.*
 pyte ~= 0.6.0

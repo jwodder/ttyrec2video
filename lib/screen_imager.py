@@ -70,3 +70,23 @@ class ScreenImager:
                     font=self.bold_font if c.bold else self.font,
                 )
         return img
+
+    def slideshow(self, frames, fps: int):
+        screen = pyte.Screen(self.columns, self.lines)
+        stream = pyte.Stream(screen)
+        microframes = 0
+        for fr in frames:
+            stream.feed(fr.data)
+            img = self.render(screen)
+            d = fr.duration
+            if d is not None:
+                frqty, microframes = divmod(
+                    microframes + (
+                        (d.days * 86400 + d.seconds) * 1000000 + d.microseconds
+                    ) * fps,
+                    1000000,
+                )
+                for _ in range(frqty):
+                    yield img
+            else:
+                yield img
