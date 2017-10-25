@@ -17,6 +17,7 @@ Options:
 - `--duration <>` — end at a given offset from `--start`; mutually exclusive
   with `--end`
 - `--font <???>`
+- font size
 - `--config <file>` — config file (YAML? INI?); supports defining the
   following:
     - foreground colors (normal & bold)
@@ -41,18 +42,3 @@ Options:
 - handling of nulls in output?
 - FPS
 - how long the final frame should be displayed for?
-
---------------------------------------------------------------------------------
-
-    playttyrec <infile>[.gz|.bz2]  # Rethink name
-
-Terminal interface for ttyrec playback with commands for the following:
-
-- jumping to a given frame
-- jumping to a given timestamp
-- jumping ahead/backwards a given number of frames
-- jumping ahead/backwards a given amount of time
-- going back a frame
-- showing the current frame number, timestamp, and file offset
-- dumping the current screen to a file (with or without ANSI sequences)
-- quitting
