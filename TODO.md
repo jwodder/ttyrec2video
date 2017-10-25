@@ -1,9 +1,5 @@
 - Upgrade to pyte 0.7.0
     - Support underlines
-- Possible alternatives to Pillow to look into:
-    - numpy?
-    - scipy?
-    - scikit-image?
 - Add a progress bar
 - Increase the image dimensions so they're a multiple of `macro_block_size`
 - Include cursor highlight
