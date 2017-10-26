@@ -9,7 +9,7 @@ from   lib.screen_imager import ScreenImager
 @click.command()
 @click.option('-E', '--encoding', default='utf-8')
 @click.option('-o', '--outfile', default='ttyrec.mp4')
-@click.option('--fps', type=int, default=24)
+@click.option('--fps', type=int, default=12)
 @click.option('--size', type=(int, int), default=(80, 24))
 @click.argument('ttyrec', type=click.File('rb'))
 def main(ttyrec, encoding, outfile, size, fps):
