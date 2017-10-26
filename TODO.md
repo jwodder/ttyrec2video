@@ -12,3 +12,4 @@
     - This may require changes to `pyte`
 - Support all video output formats that `imageio` supports, not just MP4's?
 - Rethink the `Frame` and `slideshow` names
+- Write a README

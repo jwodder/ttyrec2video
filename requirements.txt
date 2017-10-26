@@ -1,6 +1,0 @@
-attrs ~= 17.01
-click ~= 6.5
-imageio ~= 2.1.2
-numpy
-Pillow == 4.*
-pyte ~= 0.6.0
