@@ -1,10 +1,9 @@
-#!/usr/bin/python3
 import click
 import imageio
 import numpy as np
-from   PIL               import ImageFont
-from   lib.read_ttyrec   import read_ttyrec
-from   lib.screen_imager import ScreenImager
+from   PIL            import ImageFont
+from   .read_ttyrec   import read_ttyrec
+from   .screen_imager import ScreenImager
 
 @click.command()
 @click.option('-E', '--encoding', default='utf-8')

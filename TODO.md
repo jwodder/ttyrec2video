@@ -1,5 +1,7 @@
 - Upgrade to pyte 0.7.0
     - Support underlines
+- This currently requires `imageio ~= 2.1.2`, as version 2.2.0 can't take
+  generators of frames.  Try to upgrade?
 - Add a progress bar
 - Increase the image dimensions so they're a multiple of `macro_block_size`
 - Include cursor highlight

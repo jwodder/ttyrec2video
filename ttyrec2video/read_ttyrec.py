@@ -30,16 +30,3 @@ def read_ttyrec(fp, encoding=None, errors=None):
         )
     if prev is not None:
         yield prev
-
-def read_frame(fp, encoding=None, errors=None):
-    start = fp.tell() if fp.seekable() else None
-    sec, usec, size = struct.unpack('<3I', fp.read(12))
-    dt = datetime.fromtimestamp(sec).replace(microsecond=usec)
-    data = fp.read(size)
-    if len(data) < size:
-        raise ValueError  ###
-    if encoding is not None:
-        data = data.decode(encoding, errors or 'strict')
-    end = fp.tell() if fp.seekable() else None
-    return Frame(timestamp=dt, data=data, index=None, start=start, end=end,
-                 duration=None)
