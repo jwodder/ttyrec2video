@@ -35,6 +35,8 @@ Options:
     - duration
     - whether to flash the screen instead (and what that looks like)
 - location & format (and font size?) of optional timestamp
+    - timezone to convert timestamp to?
+    - timezone to assume input timestamps are in (default: UTC)
 - maximum wait between tty frames?
 - `-v`, `--verbose` — Instead of showing a progress bar, print
   "Processing|Skipping frame N (N-N bytes, YYYY-MM-DD HH:MM:SS) ..." upon
