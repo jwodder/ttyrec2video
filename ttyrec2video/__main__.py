@@ -28,6 +28,8 @@ def main(ttyrec, encoding, outfile, size, fps):
         columns   = size[0],
         lines     = size[1],
     )
+    ### TODO: Read through the input at least once before beginning conversion
+    ### so that encoding errors are caught as soon as possible?
     imageio.plugins.ffmpeg.download()
     imageio.mimwrite(
         outfile,

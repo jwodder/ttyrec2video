@@ -18,6 +18,7 @@ Options:
   with `--end`
 - `--font <???>`
 - font size
+- line height?
 - `--config <file>` — config file (YAML? INI?); supports defining the
   following:
     - foreground colors (normal & bold)
