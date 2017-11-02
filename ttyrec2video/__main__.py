@@ -9,6 +9,11 @@ from   .screen_imager import ScreenImager
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
               help='Character encoding of ttyrec file')
+@click.option('--font-file', type=click.Path(exists=True, dir_okay=False),
+              metavar='TTF_FILE', required=True)
+@click.option('--bold-font-file', type=click.Path(exists=True, dir_okay=False),
+              metavar='TTF_FILE', required=True)
+@click.option('--font-size', type=int, default=16)
 @click.option('--fps', type=int, default=12, show_default=True,
               help='Set output frames per second')
 @click.option('--ibm', 'encoding', flag_value='cp437',
@@ -20,11 +25,12 @@ from   .screen_imager import ScreenImager
 @click.version_option(__version__, '-V', '--version',
                       message='ttyrec2video %(version)s')
 @click.argument('ttyrec', type=click.File('rb'))
-def main(ttyrec, encoding, outfile, size, fps):
+def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
+         bold_font_file):
     imgr = ScreenImager(
-        font      = ImageFont.truetype('data/fonts/unifont.ttf', size=16),
-        bold_font = ImageFont.truetype('data/fonts/unifont.ttf', size=16),
-        font_size = 16,
+        font      = ImageFont.truetype(font_file, size=font_size),
+        bold_font = ImageFont.truetype(bold_font_file, size=font_size),
+        font_size = font_size,
         columns   = size[0],
         lines     = size[1],
     )

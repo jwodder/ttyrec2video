@@ -13,3 +13,7 @@
 - Support all video output formats that `imageio` supports, not just MP4's?
 - Rethink the `Frame` and `slideshow` names
 - Write a README
+- Handle the user not specifying any fonts
+    - Use fontconfig to find fonts?
+    - Bundle/autodownload some font?
+        - <http://font.ubuntu.com>?
