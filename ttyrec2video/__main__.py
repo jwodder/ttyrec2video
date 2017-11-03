@@ -1,10 +1,10 @@
 import click
 import imageio
 import numpy as np
-from   PIL            import ImageFont
-from   .              import __version__
-from   .read_ttyrec   import read_ttyrec
-from   .screen_imager import ScreenImager
+from   PIL          import ImageFont
+from   .            import __version__
+from   .read_ttyrec import read_ttyrec
+from   .renderer    import ScreenRenderer
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
@@ -27,7 +27,7 @@ from   .screen_imager import ScreenImager
 @click.argument('ttyrec', type=click.File('rb'))
 def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
          bold_font_file):
-    imgr = ScreenImager(
+    imgr = ScreenRenderer(
         font      = ImageFont.truetype(font_file, size=font_size),
         bold_font = ImageFont.truetype(bold_font_file, size=font_size),
         font_size = font_size,
@@ -41,7 +41,7 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
         outfile,
         map(
             np.asarray,  # <https://stackoverflow.com/a/1095878/744178>
-            imgr.slideshow(read_ttyrec(ttyrec, encoding=encoding), fps),
+            imgr.render_frames(read_ttyrec(ttyrec, encoding=encoding), fps),
         ),
         format='mp4',
         fps=fps,

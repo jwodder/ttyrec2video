@@ -28,7 +28,7 @@ BG["default"] = DEFAULT_BG
 
 
 @attr.s
-class ScreenImager:
+class ScreenRenderer:
     font_size = attr.ib()
     # Fonts must be PIL.ImageFont instances.  (No, `attrs` validators can't be
     # used to enforce this.)  They are also assumed to be monospaced and of
@@ -71,7 +71,7 @@ class ScreenImager:
                 )
         return img
 
-    def slideshow(self, frames, fps: int):
+    def render_frames(self, frames, fps: int):
         screen = pyte.Screen(self.columns, self.lines)
         stream = pyte.Stream(screen)
         microframes = 0
