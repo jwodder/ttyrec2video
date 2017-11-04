@@ -1,5 +1,4 @@
-- Upgrade to pyte 0.7.0
-    - Support underlines
+- Support underlines
 - This currently requires `imageio ~= 2.1.2`, as version 2.2.0 can't take
   generators of frames.  Try to upgrade?
 - Add a progress bar
