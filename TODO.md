@@ -3,7 +3,7 @@
   generators of frames.  Try to upgrade?
 - Add a progress bar
 - Increase the image dimensions so they're a multiple of `macro_block_size`
-- Include cursor highlight
+- Support different levels of cursor visibility
 - Make `ScreenRenderer` return numpy arrays instead of PIL images?
 - Always show the initial frame even if it lasts for less than 1/FPS?
 - Add special handling for frames that last for less than 1/FPS?

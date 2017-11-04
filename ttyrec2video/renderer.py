@@ -3,6 +3,7 @@ from   PIL import Image, ImageDraw
 import pyte
 
 DEFAULT_BG = (0,0,0)
+CURSOR_BG  = (0x9A, 0x9A, 0x9A)
 
 FG = {}
 FG.update({
@@ -53,7 +54,8 @@ class ScreenRenderer:
             for x in range(self.columns):
                 c = screen.buffer[y][x]
                 fg = FG[c.fg]
-                bg = BG[c.bg]
+                bg = CURSOR_BG if (x,y) == (screen.cursor.x, screen.cursor.y) \
+                               else BG[c.bg]
                 if c.reverse:
                     fg, bg = bg, fg
                 #if c.underline:  # pyte 0.7.0?
