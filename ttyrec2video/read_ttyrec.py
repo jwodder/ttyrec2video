@@ -12,7 +12,15 @@ def read_ttyrec(fp, encoding=None, errors=None):
         dt = datetime.fromtimestamp(sec).replace(microsecond=usec)
         data = fp.read(size)
         if len(data) < size:
-            raise ValueError  ###
+            raise ValueError(
+                'ttyrec frame at offset {} ended prematurely;'
+                ' expected {} byte{}, got {}'.format(
+                    prev.end if prev is not None else 0,
+                    size,
+                    's' if size != 1 else '',
+                    len(data),
+                )
+            )
         if encoding is not None:
             data = data.decode(encoding, errors or 'strict')
         if prev is not None:
