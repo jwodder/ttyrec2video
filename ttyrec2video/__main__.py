@@ -6,6 +6,10 @@ from   .            import __version__
 from   .read_ttyrec import read_ttyrec
 from   .renderer    import ScreenRenderer
 
+def set_ibm_encoding(ctx, param, value):
+    if value:
+        ctx.params['encoding'] = 'cp437'
+
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
               help='Character encoding of ttyrec file')
@@ -16,7 +20,7 @@ from   .renderer    import ScreenRenderer
 @click.option('--font-size', type=int, default=16)
 @click.option('--fps', type=int, default=12, show_default=True,
               help='Set output frames per second')
-@click.option('--ibm', 'encoding', flag_value='cp437',
+@click.option('--ibm', callback=set_ibm_encoding, expose_value=False,
               help='Synonym for "--encoding cp437"')
 @click.option('-o', '--outfile', default='ttyrec.mp4', show_default=True)
 @click.option('--size', type=(int, int), default=(80, 24), show_default=True,
