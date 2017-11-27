@@ -6,6 +6,10 @@ from   .            import __version__
 from   .read_ttyrec import read_ttyrec
 from   .renderer    import ScreenRenderer
 
+# Width & height of ffmpeg input needs to be a multiple of this value or else
+# imageio gets all complainy:
+MACRO_BLOCK_SIZE = 16
+
 def set_ibm_encoding(ctx, param, value):
     if value:
         ctx.params['encoding'] = 'cp437'
@@ -45,7 +49,8 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
         outfile,
         map(
             np.asarray,  # <https://stackoverflow.com/a/1095878/744178>
-            imgr.render_frames(read_ttyrec(ttyrec, encoding=encoding), fps),
+            imgr.render_frames(read_ttyrec(ttyrec, encoding=encoding), fps,
+                               block_size=MACRO_BLOCK_SIZE),
         ),
         format='mp4',
         fps=fps,

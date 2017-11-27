@@ -43,12 +43,10 @@ class ScreenRenderer:
         self.cwidth  = self.font.getsize('X')[0]
         self.cheight = self.font_size * 6 // 5
 
-    def render(self, screen: pyte.Screen) -> Image:
-        img = Image.new(
-            'RGB',
-            (self.columns * self.cwidth, self.lines * self.cheight),
-            DEFAULT_BG,
-        )
+    def render(self, screen: pyte.Screen, block_size=None) -> Image:
+        width  = self.columns * self.cwidth
+        height = self.lines * self.cheight
+        img = Image.new('RGB', (width, height), DEFAULT_BG)
         draw = ImageDraw.Draw(img)
         for y in range(self.lines):
             for x in range(self.columns):
@@ -71,15 +69,25 @@ class ScreenRenderer:
                     fill=fg,
                     font=self.bold_font if c.bold else self.font,
                 )
+        if block_size is not None:
+            wdiff = block_size - (width % block_size  or block_size)
+            hdiff = block_size - (height % block_size or block_size)
+            bigimg = Image.new(
+                'RGB',
+                (width + wdiff, height + hdiff),
+                DEFAULT_BG,
+            )
+            bigimg.paste(img, (wdiff // 2, hdiff // 2))
+            img = bigimg
         return img
 
-    def render_frames(self, frames, fps: int):
+    def render_frames(self, frames, fps: int, block_size=None):
         screen = pyte.Screen(self.columns, self.lines)
         stream = pyte.Stream(screen)
         microframes = 0
         for fr in frames:
             stream.feed(fr.data)
-            img = self.render(screen)
+            img = self.render(screen, block_size=block_size)
             d = fr.duration
             if d is not None:
                 frqty, microframes = divmod(

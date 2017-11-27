@@ -17,8 +17,8 @@ Options:
 - `--duration <>` — end at a given offset from `--start`; mutually exclusive
   with `--end`
 - `--font <???>`
-- font size
-- line height?
+- `--font-size <int>`
+- line height/interline spacing/leading
 - `--config <file>` — config file (YAML? INI?); supports defining the
   following:
     - foreground colors (normal & bold)
