@@ -42,6 +42,7 @@ class ScreenRenderer:
     def __attrs_post_init__(self):
         self.cwidth  = self.font.getsize('X')[0]
         self.cheight = self.font_size * 6 // 5
+        self.ul_depth = self.font_size
 
     def render(self, screen: pyte.Screen, block_size=None) -> Image:
         width  = self.columns * self.cwidth
@@ -49,26 +50,32 @@ class ScreenRenderer:
         img = Image.new('RGB', (width, height), DEFAULT_BG)
         draw = ImageDraw.Draw(img)
         for y in range(self.lines):
+            cy = y * self.cheight
             for x in range(self.columns):
+                cx = x * self.cwidth
                 c = screen.buffer[y][x]
                 fg = FG[c.fg]
                 bg = CURSOR_BG if (x,y) == (screen.cursor.x, screen.cursor.y) \
                                else BG[c.bg]
                 if c.reverse:
                     fg, bg = bg, fg
-                #if c.underline:  # pyte 0.7.0?
-                #    ???
                 draw.rectangle(
-                    [ x    * self.cwidth,  y    * self.cheight,
-                     (x+1) * self.cwidth, (y+1) * self.cheight],
+                    [cx, cy, cx + self.cwidth, cy + self.cheight],
                     fill=bg,
                 )
                 draw.text(
-                    (x*self.cwidth, y*self.cheight),
+                    (cx, cy),
                     c.data,
                     fill=fg,
                     font=self.bold_font if c.bold else self.font,
                 )
+                if c.underscore:
+                    draw.line(
+                        [cx,               cy + self.ul_depth,
+                         cx + self.cwidth, cy + self.ul_depth],
+                        fill=fg,
+                        width=1,  ### Should this be thicker when bold?
+                    )
         if block_size is not None:
             wdiff = block_size - (width % block_size  or block_size)
             hdiff = block_size - (height % block_size or block_size)
