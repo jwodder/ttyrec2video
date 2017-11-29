@@ -8,7 +8,6 @@
 - Support all video output formats that `imageio` supports, not just MP4's?
 - Rename `Frame` to something that doesn't conflict with the video meaning of
   the word?
-- Write a README
 - Handle the user not specifying any fonts
     - Use fontconfig to find fonts?
     - Bundle/autodownload some font?
@@ -21,7 +20,8 @@ Terminal Features to Support
 ----------------------------
 - xterm/non-VT100 `smacs` and `rmacs` sequences
     - This may require changes to `pyte`
-- Different levels of cursor visibility
+- different levels of cursor visibility
+- bell
 - dim
 - strikethrough?
 - italics?

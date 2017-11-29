@@ -21,7 +21,7 @@ Options:
 - line height/interline spacing/leading
 - `--config <file>` — config file (YAML? INI?); supports defining the
   following:
-    - foreground colors (normal & bold)
+    - foreground colors
     - background colors
     - default colors
     - font
