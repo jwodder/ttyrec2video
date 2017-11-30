@@ -49,8 +49,11 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
         outfile,
         map(
             np.asarray,  # <https://stackoverflow.com/a/1095878/744178>
-            imgr.render_frames(read_ttyrec(ttyrec, encoding=encoding), fps,
-                               block_size=MACRO_BLOCK_SIZE),
+            imgr.render_frames(
+                read_ttyrec(ttyrec, encoding=encoding, errors='replace'),
+                fps,
+                block_size=MACRO_BLOCK_SIZE,
+            ),
         ),
         format='mp4',
         fps=fps,

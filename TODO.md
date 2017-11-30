@@ -14,7 +14,6 @@
         - <http://font.ubuntu.com>?
 - Look into the "proper" default values to use with the Ubuntu font for font
   size, leading, and underline location
-- Use the `'replace'` error handler when decoding ttyrec text
 
 Terminal Features to Support
 ----------------------------
