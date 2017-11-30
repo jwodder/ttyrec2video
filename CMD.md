@@ -39,10 +39,12 @@ Options:
     - timezone to convert timestamp to?
     - timezone to assume input timestamps are in (default: UTC)
 - maximum wait between tty frames?
-- `-v`, `--verbose` — Instead of showing a progress bar, print
-  "Processing|Skipping frame N (N-N bytes, YYYY-MM-DD HH:MM:SS) ..." upon
-  processing each frame
+- verbosity & quietness options
+    - Instead of showing a progress bar, print "Processing|Skipping frame N
+      (N-N bytes, YYYY-MM-DD HH:MM:SS) ..." upon processing each frame?
+    - Show verbose ffmpeg progress?
 - handling of nulls in output?
 - FPS
 - how long the final frame should be displayed for?
 - height & thickness of underline
+- Use `'strict'` Unicode error handling instead of `'replace'`?

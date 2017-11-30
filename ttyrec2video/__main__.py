@@ -1,8 +1,10 @@
+from   math         import ceil
 import click
 import imageio
 import numpy as np
 from   PIL          import ImageFont
 from   .            import __version__
+from   .info        import ttyrec_info
 from   .read_ttyrec import read_ttyrec
 from   .renderer    import ScreenRenderer
 
@@ -35,6 +37,7 @@ def set_ibm_encoding(ctx, param, value):
 @click.argument('ttyrec', type=click.File('rb'))
 def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
          bold_font_file):
+    imageio.plugins.ffmpeg.download()
     imgr = ScreenRenderer(
         font      = ImageFont.truetype(font_file, size=font_size),
         bold_font = ImageFont.truetype(bold_font_file, size=font_size),
@@ -42,23 +45,29 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
         columns   = size[0],
         lines     = size[1],
     )
-    ### TODO: Read through the input at least once before beginning conversion
-    ### so that encoding errors are caught as soon as possible?
-    imageio.plugins.ffmpeg.download()
-    imageio.mimwrite(
-        outfile,
-        map(
-            np.asarray,  # <https://stackoverflow.com/a/1095878/744178>
-            imgr.render_frames(
-                read_ttyrec(ttyrec, encoding=encoding, errors='replace'),
-                fps,
-                block_size=MACRO_BLOCK_SIZE,
-            ),
+    click.echo('Scanning {} ...'.format(ttyrec.name), err=True)
+    info = ttyrec_info(ttyrec.name, read_ttyrec(ttyrec), list_frames=False)
+    if info["frame_qty"] == 0:
+        raise click.UsageError('{}: ttyrec file is empty'.format(ttyrec.name))
+    click.echo('ttyrec length: {duration} ({frame_qty} distinct frames)'
+               .format(**info), err=True)
+    ttyrec.seek(0)
+    click.echo('Converting {} ...'.format(ttyrec.name), err=True)
+    with click.progressbar(
+        imgr.render_frames(
+            read_ttyrec(ttyrec, encoding=encoding, errors='replace'),
+            fps,
+            block_size=MACRO_BLOCK_SIZE,
         ),
-        format='mp4',
-        fps=fps,
-    )
-    ### TODO: Include progress bar
+        length=ceil(info["duration_seconds"] * fps),
+    ) as mov_frames:
+        imageio.mimwrite(
+            outfile,
+            # <https://stackoverflow.com/a/1095878/744178>:
+            map(np.asarray, mov_frames),
+            format='mp4',
+            fps=fps,
+        )
 
 if __name__ == '__main__':
     main()

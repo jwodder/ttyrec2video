@@ -62,7 +62,7 @@ Options
 - ``--font-size <int>`` — Set the size of rendered text; defaults to 16
 
 - ``-E <encoding>``, ``--encoding <encoding>`` — Specify the character encoding
-  to use for reading the ttyrec file; defaults to UTF-8
+  to use for reading the ttyrec file's text; defaults to UTF-8
 
 - ``--ibm`` — Synonym for "``--encoding cp437``", `cp437
   <https://en.wikipedia.org/wiki/Code_page_437>`_ being the character encoding
