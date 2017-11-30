@@ -5,10 +5,14 @@ import click
 from   .            import __version__
 from   .read_ttyrec import read_ttyrec
 
+def set_ibm_encoding(ctx, param, value):
+    if value:
+        ctx.params['encoding'] = 'cp437'
+
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
               help='Character encoding of ttyrec files')
-@click.option('--ibm', 'encoding', flag_value='cp437',
+@click.option('--ibm', callback=set_ibm_encoding, expose_value=False,
               help='Synonym for "--encoding cp437"')
 @click.option('-F', '--list-frames', is_flag=True)
 @click.version_option(__version__, '-V', '--version',
