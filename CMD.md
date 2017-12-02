@@ -48,3 +48,4 @@ Options:
 - how long the final frame should be displayed for?
 - height & thickness of underline
 - Use `'strict'` Unicode error handling instead of `'replace'`?
+- options for ffmpeg

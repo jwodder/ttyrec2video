@@ -1,4 +1,5 @@
 from   math         import ceil
+from   pathlib      import Path
 import click
 import imageio
 import numpy as np
@@ -28,13 +29,13 @@ def set_ibm_encoding(ctx, param, value):
               help='Set output frames per second')
 @click.option('--ibm', callback=set_ibm_encoding, expose_value=False,
               help='Synonym for "--encoding cp437"')
-@click.option('-o', '--outfile', default='ttyrec.mp4', show_default=True)
 @click.option('--size', type=(int, int), default=(80, 24), show_default=True,
               metavar='COLUMNS LINES',
               help='Size of screen on which ttyrec file was recorded')
 @click.version_option(__version__, '-V', '--version',
                       message='ttyrec2video %(version)s')
 @click.argument('ttyrec', type=click.File('rb'))
+@click.argument('outfile', required=False)
 def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
          bold_font_file):
     imageio.plugins.ffmpeg.download()
@@ -52,7 +53,9 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
     click.echo('ttyrec length: {duration} ({frame_qty} distinct frames)'
                .format(**info), err=True)
     ttyrec.seek(0)
-    click.echo('Converting {} ...'.format(ttyrec.name), err=True)
+    if outfile is None:
+        outfile = str(Path(ttyrec.name).with_suffix('.mp4'))
+    click.echo('Writing {} ...'.format(outfile), err=True)
     with click.progressbar(
         imgr.render_frames(
             read_ttyrec(ttyrec, encoding=encoding, errors='replace'),
@@ -61,13 +64,7 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
         ),
         length=ceil(info["duration_seconds"] * fps),
     ) as mov_frames:
-        imageio.mimwrite(
-            outfile,
-            # <https://stackoverflow.com/a/1095878/744178>:
-            map(np.asarray, mov_frames),
-            format='mp4',
-            fps=fps,
-        )
+        imageio.mimwrite(outfile, map(np.asarray, mov_frames), fps=fps)
 
 if __name__ == '__main__':
     main()
