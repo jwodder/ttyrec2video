@@ -32,6 +32,11 @@ you can install ``ttyrec2video`` and its dependencies by running::
 Installing inside a `virtual environment
 <http://docs.python-guide.org/en/latest/dev/virtualenvs/>`_ is recommended.
 
+Note that ``ttyrec2video`` uses `imageio <http://imageio.github.io>`_, which in
+turn needs the `ffmpeg <https://ffmpeg.org>`_ program in order to create
+videos.  If you don't have a suitable version of ffmpeg already installed, one
+will be downloaded for the program to use instead.
+
 
 Usage
 =====
