@@ -9,10 +9,10 @@
     - Always show the initial frame even if it lasts for less than 1/FPS?
     - Add special handling for frames that last for less than 1/FPS?
         - Blur them together with adjacent frames?
+    - Give final frame a non-instant duration?
 - Add docstrings
 - Include an example ttyrec and video in the repository (and link to it from
   the README) ?
-- Handle ttyrecs with only one frame
 - Prohibit `-` as an infile or outfile name?
 - Try to force the output to always be generated with ffmpeg instead of
   imageio's other backends?

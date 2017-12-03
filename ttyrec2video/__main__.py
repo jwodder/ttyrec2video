@@ -48,8 +48,12 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
     )
     click.echo('Scanning {} ...'.format(ttyrec.name), err=True)
     info = ttyrec_info(ttyrec.name, read_ttyrec(ttyrec), list_frames=False)
-    if info["frame_qty"] == 0:
-        raise click.UsageError('{}: ttyrec file is empty'.format(ttyrec.name))
+    frame_qty = info["frame_qty"]
+    if frame_qty < 2:
+        raise click.UsageError(
+            '{}: ttyrec only has {} frame{}; need at least two to make a video'
+            .format(ttyrec.name, frame_qty, 's' if frame_qty != 1 else '')
+        )
     click.echo('ttyrec length: {duration} ({frame_qty} distinct frames)'
                .format(**info), err=True)
     ttyrec.seek(0)
