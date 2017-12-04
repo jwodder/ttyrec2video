@@ -21,8 +21,6 @@
 
 Terminal Features to Support
 ----------------------------
-- xterm/non-VT100 `smacs` and `rmacs` sequences
-    - This may require changes to `pyte`
 - different levels of cursor visibility
 - bell
 - dim

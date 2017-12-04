@@ -91,6 +91,11 @@ class ScreenRenderer:
     def render_frames(self, frames, fps: int, block_size=None):
         screen = pyte.Screen(self.columns, self.lines)
         stream = pyte.Stream(screen)
+        # Disabling `use_utf8` is necessary for pyte to honor smacs and rmacs
+        # sequences (and that's apparently the only thing it controls).  I have
+        # yet to figure out why one would ever want to set `use_utf8` to
+        # `True`.
+        stream.use_utf8 = False
         microframes = 0
         for fr in frames:
             stream.feed(fr.data)
