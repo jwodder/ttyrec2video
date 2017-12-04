@@ -56,14 +56,14 @@ Options
   to use for reading the ttyrec file's text; defaults to UTF-8
 
 - ``--font-file <TTF file>`` — Specify the path to a TrueType font (``.ttf``)
-  file containing the font to use for rendering normal text.  This option is
-  required.
+  file containing the font to use for rendering normal text.  The font is
+  assumed to be monospaced.  This option is required.
 
 - ``--bold-font-file <TTF file>`` — Specify the path to a TrueType font
-  (``.ttf``) file containing the font to use for rendering bold text.  This
-  option is required.
+  (``.ttf``) file containing the font to use for rendering bold text.  The font
+  is assumed to be monospaced.  This option is required.
 
-- ``--font-size <int>`` — Set the size of rendered text; defaults to 16
+- ``--font-size <int>`` — Set the font size of rendered text; defaults to 16
 
 - ``--fps <int>`` — Set the FPS (frames per second) rate of the output video;
   defaults to 12
