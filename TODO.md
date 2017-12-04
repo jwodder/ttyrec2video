@@ -4,7 +4,6 @@
         - <http://font.ubuntu.com>?
 - Look into the "proper" default values to use with the Ubuntu font for font
   size, leading, and underline location
-- Die gracefully on short ttyrec errors
 - Handle brief frames:
     - Always show the initial frame even if it lasts for less than 1/FPS?
     - Add special handling for frames that last for less than 1/FPS?

@@ -6,7 +6,7 @@ import numpy as np
 from   PIL          import ImageFont
 from   .            import __version__
 from   .info        import ttyrec_info
-from   .read_ttyrec import read_ttyrec
+from   .read_ttyrec import ShortTTYRecError, read_ttyrec
 from   .renderer    import ScreenRenderer
 
 # Width & height of ffmpeg input needs to be a multiple of this value or else
@@ -36,7 +36,8 @@ def set_ibm_encoding(ctx, param, value):
                       message='ttyrec2video %(version)s')
 @click.argument('ttyrec', type=click.File('rb'))
 @click.argument('outfile', required=False)
-def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
+@click.pass_context
+def main(ctx, ttyrec, encoding, outfile, size, fps, font_size, font_file,
          bold_font_file):
     imageio.plugins.ffmpeg.download()
     imgr = ScreenRenderer(
@@ -47,12 +48,15 @@ def main(ttyrec, encoding, outfile, size, fps, font_size, font_file,
         lines     = size[1],
     )
     click.echo('Scanning {} ...'.format(ttyrec.name), err=True)
-    info = ttyrec_info(ttyrec.name, read_ttyrec(ttyrec), list_frames=False)
+    try:
+        info = ttyrec_info(ttyrec.name, read_ttyrec(ttyrec), list_frames=False)
+    except ShortTTYRecError as e:
+        ctx.fail(str(e))
     frame_qty = info["frame_qty"]
     if frame_qty < 2:
-        raise click.UsageError(
-            '{}: ttyrec only has {} frame{}; need at least two to make a video'
-            .format(ttyrec.name, frame_qty, 's' if frame_qty != 1 else '')
+        ctx.fail(
+            'ttyrec only has {} frame{}; need at least two to make a video'
+            .format(frame_qty, 's' if frame_qty != 1 else '')
         )
     click.echo('ttyrec length: {duration} ({frame_qty} distinct frames)'
                .format(**info), err=True)
