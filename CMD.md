@@ -49,3 +49,4 @@ Options:
 - height & thickness of underline
 - Use `'strict'` Unicode error handling instead of `'replace'`?
 - options for ffmpeg
+- whether to show the cursor

@@ -40,8 +40,8 @@ class ScreenRenderer:
     columns   = attr.ib(default=80)
 
     def __attrs_post_init__(self):
-        self.cwidth  = self.font.getsize('X')[0]
-        self.cheight = self.font_size * 6 // 5
+        self.cwidth   = self.font.getsize('X')[0]
+        self.cheight  = self.font_size * 6 // 5
         self.ul_depth = self.font_size
 
     def render(self, screen: pyte.Screen, block_size=None) -> Image:
@@ -88,7 +88,7 @@ class ScreenRenderer:
             img = bigimg
         return img
 
-    def render_frames(self, frames, fps: int, block_size=None):
+    def render_updates(self, updates, fps: int, block_size=None):
         screen = pyte.Screen(self.columns, self.lines)
         stream = pyte.Stream(screen)
         # Disabling `use_utf8` is necessary for pyte to honor smacs and rmacs
@@ -97,7 +97,7 @@ class ScreenRenderer:
         # `True`.
         stream.use_utf8 = False
         microframes = 0
-        for fr in frames:
+        for fr in updates:
             stream.feed(fr.data)
             img = self.render(screen, block_size=block_size)
             d = fr.duration

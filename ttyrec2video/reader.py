@@ -4,7 +4,7 @@ from   functools   import partial
 import struct
 import attr
 
-Frame = namedtuple('Frame', 'timestamp data index start end duration')
+TTYUpdate = namedtuple('TTYUpdate', 'timestamp data index start end duration')
 
 def read_ttyrec(fp, encoding=None, errors=None):
     prev = None
@@ -25,7 +25,7 @@ def read_ttyrec(fp, encoding=None, errors=None):
             prev_end = prev.end
         else:
             prev_end = 0
-        prev = Frame(
+        prev = TTYUpdate(
             timestamp = dt,
             data      = data,
             index     = i,
@@ -45,7 +45,7 @@ class ShortTTYRecError(ValueError):
 
     def __str__(self):
         return (
-            'ttyrec frame at offset {0.offset} ended prematurely;'
+            'ttyrec update at offset {0.offset} ended prematurely;'
             ' expected {0.expected} byte{1}, got {0.received}'.format(
                 self,
                 's' if self.expected != 1 else '',

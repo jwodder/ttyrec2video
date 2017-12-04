@@ -1,13 +1,13 @@
-from   math         import ceil
-from   pathlib      import Path
+from   math      import ceil
+from   pathlib   import Path
 import click
 import imageio
 import numpy as np
-from   PIL          import ImageFont
-from   .            import __version__
-from   .info        import ttyrec_info
-from   .read_ttyrec import ShortTTYRecError, read_ttyrec
-from   .renderer    import ScreenRenderer
+from   PIL       import ImageFont
+from   .         import __version__
+from   .info     import ttyrec_info
+from   .reader   import ShortTTYRecError, read_ttyrec
+from   .renderer import ScreenRenderer
 
 # Width & height of ffmpeg input needs to be a multiple of this value or else
 # imageio gets all complainy:
@@ -49,23 +49,23 @@ def main(ctx, ttyrec, encoding, outfile, size, fps, font_size, font_file,
     )
     click.echo('Scanning {} ...'.format(ttyrec.name), err=True)
     try:
-        info = ttyrec_info(ttyrec.name, read_ttyrec(ttyrec), list_frames=False)
+        info = ttyrec_info(ttyrec.name, read_ttyrec(ttyrec), show_all=False)
     except ShortTTYRecError as e:
         ctx.fail(str(e))
-    frame_qty = info["frame_qty"]
-    if frame_qty < 2:
+    update_qty = info["update_qty"]
+    if update_qty < 2:
         ctx.fail(
-            'ttyrec only has {} frame{}; need at least two to make a video'
-            .format(frame_qty, 's' if frame_qty != 1 else '')
+            'ttyrec only has {} update{}; need at least two to make a video'
+            .format(update_qty, 's' if update_qty != 1 else '')
         )
-    click.echo('ttyrec length: {duration} ({frame_qty} distinct frames)'
+    click.echo('ttyrec length: {duration} ({update_qty} distinct frames)'
                .format(**info), err=True)
     ttyrec.seek(0)
     if outfile is None:
         outfile = str(Path(ttyrec.name).with_suffix('.mp4'))
     click.echo('Writing {} ...'.format(outfile), err=True)
     with click.progressbar(
-        imgr.render_frames(
+        imgr.render_updates(
             read_ttyrec(ttyrec, encoding=encoding, errors='replace'),
             fps,
             block_size=MACRO_BLOCK_SIZE,

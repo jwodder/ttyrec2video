@@ -4,11 +4,11 @@
         - <http://font.ubuntu.com>?
 - Look into the "proper" default values to use with the Ubuntu font for font
   size, leading, and underline location
-- Handle brief frames:
-    - Always show the initial frame even if it lasts for less than 1/FPS?
-    - Add special handling for frames that last for less than 1/FPS?
-        - Blur them together with adjacent frames?
-    - Give final frame a non-instant duration?
+- Handle brief TTY updates:
+    - Always show the initial update even if it lasts for less than 1/FPS?
+    - Add special handling for updates that last for less than 1/FPS?
+        - Blur them together with adjacent updates?
+    - Give final update a non-instant duration?
 - Add docstrings
 - Include an example ttyrec and video in the repository (and link to it from
   the README) ?
@@ -34,6 +34,4 @@ Coding Changes
     - Solution: Give the generator passed to `mimwrite()` a `__len__`?
       Cf. <https://git.io/vbtCs>
 - Make `ScreenRenderer` return numpy arrays instead of PIL images?
-- Rename `Frame` to something that doesn't conflict with the video meaning of
-  the word?
-- Try to speed up conversion of ttyrec frames with long durations
+- Try to speed up conversion of ttyrec updates with long durations
