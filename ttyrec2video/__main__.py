@@ -5,7 +5,6 @@ import imageio
 import numpy as np
 from   PIL       import ImageFont
 from   .         import __version__
-from   .info     import ttyrec_info
 from   .reader   import ShortTTYRecError, read_ttyrec
 from   .renderer import ScreenRenderer
 
@@ -52,21 +51,22 @@ def main(ctx, ttyrec, encoding, outfile, size, fps, font_size, font_file,
         updates = list(read_ttyrec(ttyrec, encoding=encoding, errors='replace'))
     except ShortTTYRecError as e:
         ctx.fail(str(e))
-    info = ttyrec_info(ttyrec.name, updates, show_all=False)
-    update_qty = info["update_qty"]
-    if update_qty < 2:
+    if len(updates) < 2:
         ctx.fail(
             'ttyrec only has {} update{}; need at least two to make a video'
-            .format(update_qty, 's' if update_qty != 1 else '')
+            .format(len(updates), 's' if len(updates) != 1 else '')
         )
-    click.echo('ttyrec length: {duration} ({update_qty} distinct frames)'
-               .format(**info), err=True)
+    duration = updates[-1].timestamp - updates[0].timestamp
+    click.echo(
+        'ttyrec length: {} ({} distinct frames)'.format(duration, len(updates)),
+        err=True,
+    )
     if outfile is None:
         outfile = str(Path(ttyrec.name).with_suffix('.mp4'))
     click.echo('Writing {} ...'.format(outfile), err=True)
     with click.progressbar(
         imgr.render_updates(updates, fps, block_size=MACRO_BLOCK_SIZE),
-        length=ceil(info["duration_seconds"] * fps),
+        length=ceil(duration.total_seconds() * fps),
     ) as mov_frames:
         imageio.mimwrite(outfile, map(np.asarray, mov_frames), fps=fps)
 
