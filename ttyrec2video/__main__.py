@@ -47,11 +47,12 @@ def main(ctx, ttyrec, encoding, outfile, size, fps, font_size, font_file,
         columns   = size[0],
         lines     = size[1],
     )
-    click.echo('Scanning {} ...'.format(ttyrec.name), err=True)
+    click.echo('Reading {} ...'.format(ttyrec.name), err=True)
     try:
-        info = ttyrec_info(ttyrec.name, read_ttyrec(ttyrec), show_all=False)
+        updates = list(read_ttyrec(ttyrec, encoding=encoding, errors='replace'))
     except ShortTTYRecError as e:
         ctx.fail(str(e))
+    info = ttyrec_info(ttyrec.name, updates, show_all=False)
     update_qty = info["update_qty"]
     if update_qty < 2:
         ctx.fail(
@@ -60,16 +61,11 @@ def main(ctx, ttyrec, encoding, outfile, size, fps, font_size, font_file,
         )
     click.echo('ttyrec length: {duration} ({update_qty} distinct frames)'
                .format(**info), err=True)
-    ttyrec.seek(0)
     if outfile is None:
         outfile = str(Path(ttyrec.name).with_suffix('.mp4'))
     click.echo('Writing {} ...'.format(outfile), err=True)
     with click.progressbar(
-        imgr.render_updates(
-            read_ttyrec(ttyrec, encoding=encoding, errors='replace'),
-            fps,
-            block_size=MACRO_BLOCK_SIZE,
-        ),
+        imgr.render_updates(updates, fps, block_size=MACRO_BLOCK_SIZE),
         length=ceil(info["duration_seconds"] * fps),
     ) as mov_frames:
         imageio.mimwrite(outfile, map(np.asarray, mov_frames), fps=fps)
