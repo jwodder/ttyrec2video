@@ -60,12 +60,14 @@ Options
   to use for reading the ttyrec file's text; defaults to UTF-8
 
 - ``--font-file <TTF file>`` — Specify the path to a TrueType font (``.ttf``)
-  file containing the font to use for rendering normal text.  The font is
-  assumed to be monospaced.  This option is required.
+  file containing the font to use for rendering normal (non-bold) text.  The
+  font is assumed to be monospaced.  The default is to use the `Ubuntu
+  Monospace font <http://font.ubuntu.com>`_.
 
 - ``--bold-font-file <TTF file>`` — Specify the path to a TrueType font
   (``.ttf``) file containing the font to use for rendering bold text.  The font
-  is assumed to be monospaced.  This option is required.
+  is assumed to be monospaced.  The default is to use the bold `Ubuntu
+  Monospace font <http://font.ubuntu.com>`_.
 
 - ``--font-size <int>`` — Set the font size of rendered text; defaults to 16
 
@@ -79,3 +81,14 @@ Options
 
 - ``--size <columns> <lines>`` — Set the dimensions of the terminal screen on
   which the ttyrec was recorded; defaults to 80×24
+
+
+Licenses
+========
+The source code for ``ttyrec2video`` is licensed under the `MIT license
+<https://opensource.org/licenses/MIT>`_.
+
+``ttyrec2video`` contains a bundled copy of the `Ubuntu Monospace font
+<http://font.ubuntu.com>`_, regular and bold weight, version 0.83, copyright
+2010, 2011 Canonical Ltd, licensed under the `Ubuntu Font Licence, Version 1.0
+<https://launchpad.net/ubuntu-font-licence>`_.

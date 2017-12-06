@@ -1,7 +1,3 @@
-- Handle the user not specifying any fonts
-    - Use fontconfig to find fonts?
-    - Bundle/autodownload some font?
-        - <http://font.ubuntu.com>?
 - Look into the "proper" default values to use with the Ubuntu font for font
   size, leading, and underline location
 - Handle brief TTY updates:
@@ -17,6 +13,8 @@
   imageio's other backends?
 - Check that the outfile's file extension is a supported format before scanning
   the ttyrec?
+- Support writing output to stdout?
+- Move `ttyrec-info` to an `--info` option of `ttyrec2video`?
 
 Terminal Features to Support
 ----------------------------
@@ -24,7 +22,8 @@ Terminal Features to Support
 - bell
 - dim
 - strikethrough?
-- italics?
+- italics? (The Ubuntu font has separate fonts for regular & bold italic
+  monospace)
 - blink?
 
 Coding Changes

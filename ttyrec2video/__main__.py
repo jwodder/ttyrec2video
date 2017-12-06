@@ -1,15 +1,16 @@
-from   io           import BytesIO
-from   math         import ceil
-from   pathlib      import Path
-from   urllib.parse import urlsplit
+from   io            import BytesIO
+from   math          import ceil
+from   pathlib       import Path
+from   urllib.parse  import urlsplit
 import click
 import imageio
 import requests
 import numpy as np
-from   PIL          import ImageFont
-from   .            import __version__
-from   .reader      import ShortTTYRecError, read_ttyrec
-from   .renderer    import ScreenRenderer
+from   PIL           import ImageFont
+from   pkg_resources import resource_filename
+from   .             import __version__
+from   .reader       import ShortTTYRecError, read_ttyrec
+from   .renderer     import ScreenRenderer
 
 # Width & height of ffmpeg input needs to be a multiple of this value or else
 # imageio gets all complainy:
@@ -19,13 +20,16 @@ def set_ibm_encoding(ctx, param, value):
     if value:
         ctx.params['encoding'] = 'cp437'
 
+def font_file(fontname):
+    return resource_filename('ttyrec2video', 'data/ubuntu-font/' + fontname)
+
 @click.command(context_settings={"help_option_names": ["-h", "--help"]})
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
               help='Character encoding of ttyrec file')
 @click.option('--font-file', type=click.Path(exists=True, dir_okay=False),
-              metavar='TTF_FILE', required=True)
+              metavar='TTF_FILE', default=font_file('UbuntuMono-R.ttf'))
 @click.option('--bold-font-file', type=click.Path(exists=True, dir_okay=False),
-              metavar='TTF_FILE', required=True)
+              metavar='TTF_FILE', default=font_file('UbuntuMono-B.ttf'))
 @click.option('--font-size', type=int, default=16)
 @click.option('--fps', type=int, default=12, show_default=True,
               help='Set output frames per second')
@@ -83,7 +87,7 @@ def open_or_get(fname):
         pth = Path(urlsplit(fname).path.rstrip('/').split('/')[-1] or 'ttyrec')
     else:
         click.echo('Reading {} ...'.format(fname), err=True)
-        fp = open(fname, 'rb')
+        fp = click.open_file(fname, 'rb')
         pth = Path(fname)
     if pth.suffix.lower() == '.gz':
         import gzip
