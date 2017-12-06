@@ -2,8 +2,6 @@
 
 `<outfile>` defaults to `<infile>` with file extension changed to `.mp4`
 
-Support `<infile>` being an HTTP(S) URL
-
 Options:
 
 - screen size

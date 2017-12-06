@@ -43,10 +43,14 @@ Usage
 
 ::
 
-    ttyrec2video [<options>] <ttyrec> [<outfile>]
+    ttyrec2video [<options>] <ttyrec>[.gz|.bz2] [<outfile>]
+
+``<ttyrec>`` may be either a path to a local ttyrec file or an HTTP(S) URL
+pointing to a remote ttyrec.  Files compressed with gzip or bzip2 will be
+uncompressed automatically.
 
 If no output filename is supplied, the resulting video is written to the input
-filepath with its extension changed to "``.mp4``."
+filepath/URL basename with its extension changed to "``.mp4``."
 
 
 Options
