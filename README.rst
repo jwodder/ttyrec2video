@@ -69,15 +69,16 @@ Options
   is assumed to be monospaced.  The default is to use the bold `Ubuntu
   Monospace font <http://font.ubuntu.com>`_.
 
-- ``--font-size <int>`` — Set the font size of rendered text; defaults to 16
+- ``--font-size <int>`` — Set the font size (in points) of rendered text;
+  defaults to 16
 
 - ``--fps <int>`` — Set the FPS (frames per second) rate of the output video;
   defaults to 12
 
-- ``--ibm`` — Synonym for "``--encoding cp437``", `cp437
-  <https://en.wikipedia.org/wiki/Code_page_437>`_ being the character encoding
+- ``--ibm`` — Synonym for "``--encoding cp437``" (`CP437
+  <https://en.wikipedia.org/wiki/Code_page_437>`_ is the character encoding
   used by NetHack's `IBMgraphics <https://nethackwiki.com/wiki/IBMgraphics>`_
-  option
+  option)
 
 - ``--size <columns> <lines>`` — Set the dimensions of the terminal screen on
   which the ttyrec was recorded; defaults to 80×24

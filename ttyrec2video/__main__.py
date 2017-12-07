@@ -16,10 +16,6 @@ from   .renderer     import ScreenRenderer
 # imageio gets all complainy:
 MACRO_BLOCK_SIZE = 16
 
-def set_ibm_encoding(ctx, param, value):
-    if value:
-        ctx.params['encoding'] = 'cp437'
-
 def font_file(fontname):
     return resource_filename('ttyrec2video', 'data/ubuntu-font/' + fontname)
 
@@ -27,14 +23,16 @@ def font_file(fontname):
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
               help='Character encoding of ttyrec file')
 @click.option('--font-file', type=click.Path(exists=True, dir_okay=False),
-              metavar='TTF_FILE', default=font_file('UbuntuMono-R.ttf'))
+              metavar='TTF_FILE', default=font_file('UbuntuMono-R.ttf'),
+              help='Font for regular-weight text')
 @click.option('--bold-font-file', type=click.Path(exists=True, dir_okay=False),
-              metavar='TTF_FILE', default=font_file('UbuntuMono-B.ttf'))
-@click.option('--font-size', type=int, default=16)
+              metavar='TTF_FILE', default=font_file('UbuntuMono-B.ttf'),
+              help='Font for bold text')
+@click.option('--font-size', type=int, default=16, show_default=True,
+              metavar='POINTS', help='Font size of rendered text')
 @click.option('--fps', type=int, default=12, show_default=True,
-              help='Set output frames per second')
-@click.option('--ibm', callback=set_ibm_encoding, expose_value=False,
-              help='Synonym for "--encoding cp437"')
+              help='Frames per second rate for output video')
+@click.option('--ibm', is_flag=True, help='Synonym for "--encoding cp437"')
 @click.option('--size', type=(int, int), default=(80, 24), show_default=True,
               metavar='COLUMNS LINES',
               help='Size of screen on which ttyrec file was recorded')
@@ -43,8 +41,10 @@ def font_file(fontname):
 @click.argument('ttyrec')
 @click.argument('outfile', required=False)
 @click.pass_context
-def main(ctx, ttyrec, encoding, outfile, size, fps, font_size, font_file,
+def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
          bold_font_file):
+    if ibm:
+        encoding = 'cp437'
     imageio.plugins.ffmpeg.download()
     imgr = ScreenRenderer(
         font      = ImageFont.truetype(font_file, size=font_size),
