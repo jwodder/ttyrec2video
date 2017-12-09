@@ -43,6 +43,7 @@ def font_file(fontname):
 @click.pass_context
 def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
          bold_font_file):
+    """ Convert ttyrec files to videos """
     if ibm:
         encoding = 'cp437'
     imageio.plugins.ffmpeg.download()
