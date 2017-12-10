@@ -32,21 +32,21 @@ def ttyrec_info(filename, updates, show_all=False):
     update_data = []
     start_time = None
     last = None
-    for fr in updates:
+    for i, fr in enumerate(updates):
         if start_time is None:
             start_time = fr.timestamp
         last = fr
         if show_all:
             update_data.append({
-                "index": fr.index,
-                "offset": fr.start,
+                "index": i,
+                "offset": fr.offset,
                 "timestamp_iso8601": fr.timestamp.isoformat(),
                 "timestamp_unix": fr.timestamp.replace(tzinfo=timezone.utc)
                                               .timestamp(),
             })
     about = {"filename": filename}
     if last is not None:
-        about["update_qty"] = last.index + 1
+        about["update_qty"] = i + 1
         duration = last.timestamp - start_time
         about["duration"] = str(duration)
         about["duration_seconds"] = duration.total_seconds()

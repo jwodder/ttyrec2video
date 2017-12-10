@@ -37,7 +37,6 @@ Coding Changes
       upgrading
 - Make `ScreenRenderer` return numpy arrays instead of PIL images?
 - Try to speed up conversion of ttyrec updates with long durations
-- Replace the `start` and `end` attributes of `TTYUpdate` with just a single
-  `offset` attribute
-- Eliminate `TTYUpdate.index`?
+- Eliminate `TTYUpdate.offset`?
 - Split off screen-rendering code into its own package, `pyte2image`?
+- Split off ttyrec-reading and -manipulation code into its own package?

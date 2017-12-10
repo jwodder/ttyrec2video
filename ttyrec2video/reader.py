@@ -4,17 +4,18 @@ from   functools   import partial
 import struct
 import attr
 
-TTYUpdate = namedtuple('TTYUpdate', 'timestamp data index start end duration')
+TTYUpdate = namedtuple('TTYUpdate', 'timestamp data offset duration')
 
 def read_ttyrec(fp, encoding=None, errors=None):
     prev = None
-    for i, header in enumerate(iter(partial(fp.read, 12), b'')):
+    offset = 0
+    for header in iter(partial(fp.read, 12), b''):
         sec, usec, size = struct.unpack('<3I', header)
         dt = datetime.fromtimestamp(sec).replace(microsecond=usec)
         data = fp.read(size)
         if len(data) < size:
             raise ShortTTYRecError(
-                offset   = prev.end if prev is not None else 0,
+                offset   = offset,
                 expected = size,
                 received = len(data),
             )
@@ -22,17 +23,8 @@ def read_ttyrec(fp, encoding=None, errors=None):
             data = data.decode(encoding, errors or 'strict')
         if prev is not None:
             yield prev._replace(duration=dt-prev.timestamp)
-            prev_end = prev.end
-        else:
-            prev_end = 0
-        prev = TTYUpdate(
-            timestamp = dt,
-            data      = data,
-            index     = i,
-            start     = prev_end,
-            end       = prev_end + 12 + size,
-            duration  = None,
-        )
+        prev = TTYUpdate(timestamp=dt, data=data, offset=offset, duration=None)
+        offset += 12 + size
     if prev is not None:
         yield prev
 
