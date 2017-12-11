@@ -1,5 +1,5 @@
 from   collections import namedtuple
-from   datetime    import datetime
+from   datetime    import datetime, timezone
 from   functools   import partial
 import struct
 import attr
@@ -11,7 +11,7 @@ def read_ttyrec(fp, encoding=None, errors=None):
     offset = 0
     for header in iter(partial(fp.read, 12), b''):
         sec, usec, size = struct.unpack('<3I', header)
-        dt = datetime.fromtimestamp(sec).replace(microsecond=usec)
+        dt = datetime.fromtimestamp(sec, timezone.utc).replace(microsecond=usec)
         data = fp.read(size)
         if len(data) < size:
             raise ShortTTYRecError(

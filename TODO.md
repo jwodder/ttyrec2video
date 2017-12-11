@@ -15,7 +15,6 @@
   the ttyrec?
 - Support writing output to stdout?
 - Move `ttyrec-info` to an `--info` option of `ttyrec2video`?
-- Double-check whether ttyrec timestamps are in local time or UTC
 
 Terminal Features to Support
 ----------------------------

@@ -1,4 +1,3 @@
-from   datetime import timezone
 import json
 from   textwrap import indent
 import click
@@ -41,8 +40,7 @@ def ttyrec_info(filename, updates, show_all=False):
                 "index": i,
                 "offset": fr.offset,
                 "timestamp_iso8601": fr.timestamp.isoformat(),
-                "timestamp_unix": fr.timestamp.replace(tzinfo=timezone.utc)
-                                              .timestamp(),
+                "timestamp_unix": fr.timestamp.timestamp(),
             })
     about = {"filename": filename}
     if last is not None:
