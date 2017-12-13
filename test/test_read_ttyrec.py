@@ -1,6 +1,7 @@
-from datetime            import datetime, timedelta, timezone
-from pathlib             import Path
-from ttyrec2video.reader import TTYUpdate, read_ttyrec
+from   datetime            import datetime, timedelta, timezone
+from   pathlib             import Path
+import pytest
+from   ttyrec2video.reader import ShortTTYRecError, TTYUpdate, read_ttyrec
 
 DATA_DIR = Path(__file__).with_name('data')
 
@@ -34,3 +35,12 @@ def test_read_ttyrec_utf8():
         assert list(read_ttyrec(fp, encoding='utf-8')) == [
             u._replace(data=u.data.decode('utf-8')) for u in HELLO
         ]
+
+@pytest.mark.parametrize('encoding', [None, 'utf-8'])
+def test_read_ttyrec_short(encoding):
+    with (DATA_DIR / 'short.ttyrec').open('rb') as fp:
+        with pytest.raises(
+            ShortTTYRecError,
+            message='ttyrec update at offset 18 ended prematurely;'
+                    ' expected 14 bytes, got 6',
+        ): list(read_ttyrec(fp, encoding=encoding))
