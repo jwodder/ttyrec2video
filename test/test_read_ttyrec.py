@@ -41,8 +41,8 @@ def test_read_ttyrec_short(encoding):
     with (DATA_DIR / 'short.ttyrec').open('rb') as fp:
         with pytest.raises(
             ShortTTYRecError,
-            message='ttyrec update at offset 18 ended prematurely;'
-                    ' expected 14 bytes, got 6',
+            match='ttyrec update at offset 18 ended prematurely;'
+                  ' expected 14 bytes, got 6',
         ): list(read_ttyrec(fp, encoding=encoding))
 
 @pytest.mark.parametrize('encoding', [None, 'utf-8'])
