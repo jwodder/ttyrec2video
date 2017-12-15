@@ -46,14 +46,6 @@ def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
     """ Convert ttyrec files to videos """
     if ibm:
         encoding = 'cp437'
-    imageio.plugins.ffmpeg.download()
-    imgr = ScreenRenderer(
-        font      = ImageFont.truetype(font_file, size=font_size),
-        bold_font = ImageFont.truetype(bold_font_file, size=font_size),
-        font_size = font_size,
-        columns   = size[0],
-        lines     = size[1],
-    )
     fp, def_outfile = open_or_get(ttyrec)
     try:
         with fp:
@@ -70,6 +62,14 @@ def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
         'ttyrec length: {} ({} distinct frames)'.format(duration, len(updates)),
         err=True,
     )
+    imgr = ScreenRenderer(
+        font      = ImageFont.truetype(font_file, size=font_size),
+        bold_font = ImageFont.truetype(bold_font_file, size=font_size),
+        font_size = font_size,
+        columns   = size[0],
+        lines     = size[1],
+    )
+    imageio.plugins.ffmpeg.download()
     if outfile is None:
         outfile = def_outfile
     click.echo('Writing {} ...'.format(outfile), err=True)
