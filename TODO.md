@@ -14,7 +14,6 @@
 - Check that the outfile's file extension is a supported format before scanning
   the ttyrec?
 - Support writing output to stdout?
-- Move `ttyrec-info` to an `--info` option of `ttyrec2video`?
 
 Terminal Features to Support
 ----------------------------

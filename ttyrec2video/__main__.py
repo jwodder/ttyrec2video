@@ -1,4 +1,5 @@
 from   io            import BytesIO
+import json
 from   math          import ceil
 from   pathlib       import Path
 from   urllib.parse  import urlsplit
@@ -33,6 +34,10 @@ def font_file(fontname):
 @click.option('--fps', type=int, default=12, show_default=True,
               help='Frames per second rate for output video')
 @click.option('--ibm', is_flag=True, help='Synonym for "--encoding cp437"')
+@click.option('--info', is_flag=True,
+              help='Describe ttyrec instead of converting')
+@click.option('--info-all', is_flag=True,
+              help='Describe every update in ttyrec')
 @click.option('--size', type=(int, int), default=(80, 24), show_default=True,
               metavar='COLUMNS LINES',
               help='Size of screen on which ttyrec file was recorded')
@@ -42,7 +47,7 @@ def font_file(fontname):
 @click.argument('outfile', required=False)
 @click.pass_context
 def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
-         bold_font_file):
+         bold_font_file, info, info_all):
     """ Convert ttyrec files to videos """
     if ibm:
         encoding = 'cp437'
@@ -52,6 +57,10 @@ def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
             updates = list(read_ttyrec(fp, encoding=encoding, errors='replace'))
     except ShortTTYRecError as e:
         ctx.fail(str(e))
+    if info or info_all:
+        about = ttyrec_info(updates, show_all=info_all)
+        click.echo(json.dumps(about, sort_keys=True, indent=4))
+        return
     if len(updates) < 2:
         ctx.fail(
             'ttyrec only has {} update{}; need at least two to make a video'
@@ -99,6 +108,35 @@ def open_or_get(fname):
         fp  = bz2.open(fp, 'rb')
         pth = pth.with_suffix('')
     return fp, str(pth.with_suffix('.mp4'))
+
+def ttyrec_info(updates, show_all=False):
+    update_data = []
+    start_time = None
+    last = None
+    for i, fr in enumerate(updates):
+        if start_time is None:
+            start_time = fr.timestamp
+        last = fr
+        if show_all:
+            update_data.append({
+                "index": i,
+                "offset": fr.offset,
+                "timestamp_iso8601": fr.timestamp.isoformat(),
+                "timestamp_unix": fr.timestamp.timestamp(),
+            })
+    about = {}
+    if last is not None:
+        about["update_qty"] = i + 1
+        duration = last.timestamp - start_time
+        about["duration"] = str(duration)
+        about["duration_seconds"] = duration.total_seconds()
+    else:
+        about["update_qty"] = 0
+        about["duration"] = None
+        about["duration_seconds"] = None
+    if show_all:
+        about["updates"] = update_data
+    return about
 
 if __name__ == '__main__':
     main()
