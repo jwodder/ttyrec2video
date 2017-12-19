@@ -80,6 +80,12 @@ Options
   used by NetHack's `IBMgraphics <https://nethackwiki.com/wiki/IBMgraphics>`_
   option)
 
+- ``--info`` — Instead of converting the ttyrec file to a video, output the
+  ttyrec's total duration and number of screen updates as a JSON object
+
+- ``--info-all`` — Like ``--info``, but also include a list of the time & byte
+  offsets of each screen update
+
 - ``--size <columns> <lines>`` — Set the dimensions of the terminal screen on
   which the ttyrec was recorded; defaults to 80×24
 
