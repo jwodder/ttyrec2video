@@ -16,3 +16,27 @@ Reading {} ...
     "update_qty": 3
 }}
 '''.format(pth)
+
+def test_cli_info_empty():
+    pth = str(DATA_DIR / 'empty.ttyrec')
+    r = CliRunner().invoke(main, ['--info', pth])
+    assert r.exit_code == 0, r.output
+    assert r.output == '''\
+Reading {} ...
+{{
+    "duration": null,
+    "duration_seconds": null,
+    "update_qty": 0
+}}
+'''.format(pth)
+
+def test_cli_info_short():
+    pth = str(DATA_DIR / 'short.ttyrec')
+    r = CliRunner().invoke(main, ['--info', pth])
+    assert r.exit_code != 0
+    assert r.output == '''\
+Reading {} ...
+Usage: ttyrec2video [OPTIONS] TTYREC [OUTFILE]
+
+Error: ttyrec update at offset 18 ended prematurely; expected 14 bytes, got 6
+'''.format(pth)

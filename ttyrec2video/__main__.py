@@ -20,7 +20,8 @@ MACRO_BLOCK_SIZE = 16
 def font_file(fontname):
     return resource_filename('ttyrec2video', 'data/ubuntu-font/' + fontname)
 
-@click.command(context_settings={"help_option_names": ["-h", "--help"]})
+@click.command(context_settings={"help_option_names": ["-h", "--help"]},
+               name='ttyrec2video')
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
               help='Character encoding of ttyrec file')
 @click.option('--font-file', type=click.Path(exists=True, dir_okay=False),
