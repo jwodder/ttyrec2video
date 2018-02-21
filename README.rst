@@ -3,6 +3,12 @@
     :alt: Project Status: WIP — Initial development is in progress, but there
           has not yet been a stable, usable release suitable for the public.
 
+.. image:: https://travis-ci.org/jwodder/ttyrec2video.svg?branch=master
+    :target: https://travis-ci.org/jwodder/ttyrec2video
+
+.. image:: https://codecov.io/gh/jwodder/ttyrec2video/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/jwodder/ttyrec2video
+
 .. image:: https://img.shields.io/github/license/jwodder/ttyrec2video.svg
     :target: https://opensource.org/licenses/MIT
     :alt: MIT License

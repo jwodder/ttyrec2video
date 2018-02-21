@@ -33,6 +33,7 @@ Options:
     - pitch
     - duration
     - whether to flash the screen instead (and what that looks like)
+    - whether to show a bell symbol in the corner?
 - location & format (and font size?) of optional timestamp
     - timezone to convert timestamp to?
     - timezone to assume input timestamps are in (default: UTC)

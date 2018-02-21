@@ -14,6 +14,8 @@
 - Check that the outfile's file extension is a supported format before scanning
   the ttyrec?
 - Support writing output to stdout?
+- Add an option for just creating PNGs of each screen update and leaving the
+  animation to the user?
 
 Terminal Features to Support
 ----------------------------
@@ -24,6 +26,7 @@ Terminal Features to Support
 - italics? (The Ubuntu font has separate fonts for regular & bold italic
   monospace)
 - blink?
+- poor-man's "animation" via padding NULs in output
 
 Coding Changes
 --------------
