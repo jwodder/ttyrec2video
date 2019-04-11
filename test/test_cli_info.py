@@ -37,6 +37,7 @@ def test_cli_info_short():
     assert r.output == '''\
 Reading {} ...
 Usage: ttyrec2video [OPTIONS] TTYREC [OUTFILE]
+Try "ttyrec2video -h" for help.
 
 Error: ttyrec update at offset 18 ended prematurely; expected 14 bytes, got 6
 '''.format(pth)
