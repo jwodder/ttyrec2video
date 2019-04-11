@@ -17,7 +17,7 @@ from   .renderer     import ScreenRenderer
 # imageio gets all complainy:
 MACRO_BLOCK_SIZE = 16
 
-def font_file(fontname):
+def font_path(fontname):
     return resource_filename('ttyrec2video', 'data/ubuntu-font/' + fontname)
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]},
@@ -25,10 +25,10 @@ def font_file(fontname):
 @click.option('-E', '--encoding', default='utf-8', show_default=True,
               help='Character encoding of ttyrec file')
 @click.option('--font-file', type=click.Path(exists=True, dir_okay=False),
-              metavar='TTF_FILE', default=font_file('UbuntuMono-R.ttf'),
+              metavar='TTF_FILE', default=font_path('UbuntuMono-R.ttf'),
               help='Font for regular-weight text')
 @click.option('--bold-font-file', type=click.Path(exists=True, dir_okay=False),
-              metavar='TTF_FILE', default=font_file('UbuntuMono-B.ttf'),
+              metavar='TTF_FILE', default=font_path('UbuntuMono-B.ttf'),
               help='Font for bold text')
 @click.option('--font-size', type=int, default=16, show_default=True,
               metavar='POINTS', help='Font size of rendered text')
