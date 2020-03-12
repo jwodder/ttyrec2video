@@ -1,24 +1,28 @@
-from   io            import BytesIO
+from   io                  import BytesIO
 import json
-from   math          import ceil
-from   pathlib       import Path
-from   urllib.parse  import urlsplit
+from   math                import ceil
+from   pathlib             import Path
+from   urllib.parse        import urlsplit
 import click
 import imageio
+from   importlib_resources import as_file, files
 import requests
 import numpy as np
-from   PIL           import ImageFont
-from   pkg_resources import resource_filename
-from   .             import __version__
-from   .reader       import ShortTTYRecError, read_ttyrec
-from   .renderer     import ScreenRenderer
+from   PIL                 import ImageFont
+from   .                   import __version__
+from   .reader             import ShortTTYRecError, read_ttyrec
+from   .renderer           import ScreenRenderer
 
 # Width & height of ffmpeg input needs to be a multiple of this value or else
 # imageio gets all complainy:
 MACRO_BLOCK_SIZE = 16
 
 def font_path(fontname):
-    return resource_filename('ttyrec2video', 'data/ubuntu-font/' + fontname)
+    with as_file(files('ttyrec2video') / 'data' / 'ubuntu-font' / fontname) \
+            as path:
+        # Violating the context manager like this means that ttyrec2video can't
+        # be run from within a zipfile.
+        return str(path)
 
 @click.command(context_settings={"help_option_names": ["-h", "--help"]},
                name='ttyrec2video')

@@ -29,7 +29,7 @@ may be familiar with ttyrecs from their use in recording NetHack games on
 
 Installation
 ============
-``ttyrec2video`` requires Python 3.4 or higher to run and `pip
+``ttyrec2video`` requires Python 3.5 or higher to run and `pip
 <https://pip.pypa.io>`_ 6.0+, `Setuptools <https://setuptools.readthedocs.io>`_
 30.3.0+, & `wheel <https://pypi.org/project/wheel>`_ to install.  `Once you
 have those
