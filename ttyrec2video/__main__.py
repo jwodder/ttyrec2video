@@ -6,9 +6,9 @@ from   urllib.parse        import urlsplit
 import click
 import imageio
 from   importlib_resources import as_file, files
-import requests
 import numpy as np
 from   PIL                 import ImageFont
+import requests
 from   .                   import __version__
 from   .reader             import ShortTTYRecError, read_ttyrec
 from   .renderer           import ScreenRenderer
