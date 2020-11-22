@@ -3,8 +3,9 @@
     :alt: Project Status: WIP — Initial development is in progress, but there
           has not yet been a stable, usable release suitable for the public.
 
-.. image:: https://travis-ci.com/jwodder/ttyrec2video.svg?branch=master
-    :target: https://travis-ci.com/jwodder/ttyrec2video
+.. image:: https://github.com/jwodder/ttyrec2video/workflows/Test/badge.svg?branch=master
+    :target: https://github.com/jwodder/ttyrec2video/actions?workflow=Test
+    :alt: CI Status
 
 .. image:: https://codecov.io/gh/jwodder/ttyrec2video/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/jwodder/ttyrec2video
