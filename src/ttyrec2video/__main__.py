@@ -73,7 +73,7 @@ def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
         )
     duration = updates[-1].timestamp - updates[0].timestamp
     click.echo(
-        'ttyrec length: {} ({} distinct frames)'.format(duration, len(updates)),
+        f'ttyrec length: {duration} ({len(updates)} distinct frames)',
         err=True,
     )
     imgr = ScreenRenderer(
@@ -86,7 +86,7 @@ def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
     imageio.plugins.ffmpeg.download()
     if outfile is None:
         outfile = def_outfile
-    click.echo('Writing {} ...'.format(outfile), err=True)
+    click.echo(f'Writing {outfile} ...', err=True)
     with click.progressbar(
         imgr.render_updates(updates, fps, block_size=MACRO_BLOCK_SIZE),
         length=ceil(duration.total_seconds() * fps),
@@ -95,13 +95,13 @@ def main(ctx, ttyrec, encoding, ibm, outfile, size, fps, font_size, font_file,
 
 def open_or_get(fname):
     if fname.lower().startswith(('http://', 'https://')):
-        click.echo('Downloading {} ...'.format(fname), err=True)
+        click.echo(f'Downloading {fname} ...', err=True)
         r = requests.get(fname)
         r.raise_for_status()
         fp = BytesIO(r.content)
         pth = Path(urlsplit(fname).path.rstrip('/').split('/')[-1] or 'ttyrec')
     else:
-        click.echo('Reading {} ...'.format(fname), err=True)
+        click.echo(f'Reading {fname} ...', err=True)
         fp = click.open_file(fname, 'rb')
         pth = Path(fname)
     if pth.suffix.lower() == '.gz':

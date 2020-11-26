@@ -27,7 +27,7 @@ may be familiar with ttyrecs from their use in recording NetHack games on
 
 Installation
 ============
-``ttyrec2video`` requires Python 3.5 or higher to run and `pip
+``ttyrec2video`` requires Python 3.6 or higher to run and `pip
 <https://pip.pypa.io>`_ 19.0 or higher to install.  You can install
 ``ttyrec2video`` and its dependencies by running::
 
