@@ -60,38 +60,46 @@ filepath/URL basename with its extension changed to "``.mp4``."
 Options
 -------
 
-- ``-E <encoding>``, ``--encoding <encoding>`` — Specify the character encoding
-  to use for reading the ttyrec file's text; defaults to UTF-8
+-E ENCODING, --encoding ENCODING
+                        Specify the character encoding to use for reading the
+                        ttyrec file's text; defaults to UTF-8
 
-- ``--font-file <TTF file>`` — Specify the path to a TrueType font (``.ttf``)
-  file containing the font to use for rendering normal (non-bold) text.  The
-  font is assumed to be monospaced.  The default is to use the `Ubuntu
-  Monospace font <http://font.ubuntu.com>`_.
+--font-file TTF-FILE    Specify the path to a TrueType font (``.ttf``) file
+                        containing the font to use for rendering normal
+                        (non-bold) text.  The font is assumed to be monospaced.
+                        The default is to use the `Ubuntu Monospace font
+                        <http://font.ubuntu.com>`_.
 
-- ``--bold-font-file <TTF file>`` — Specify the path to a TrueType font
-  (``.ttf``) file containing the font to use for rendering bold text.  The font
-  is assumed to be monospaced.  The default is to use the bold `Ubuntu
-  Monospace font <http://font.ubuntu.com>`_.
+--bold-font-file TTF-FILE
+                        Specify the path to a TrueType font (``.ttf``) file
+                        containing the font to use for rendering bold text.
+                        The font is assumed to be monospaced.  The default is
+                        to use the bold `Ubuntu Monospace font
+                        <http://font.ubuntu.com>`_.
 
-- ``--font-size <int>`` — Set the font size (in points) of rendered text;
-  defaults to 16
+--font-size INT         Set the font size (in points) of rendered text;
+                        defaults to 16
 
-- ``--fps <int>`` — Set the FPS (frames per second) rate of the output video;
-  defaults to 12
+--fps INT               Set the FPS (frames per second) rate of the output
+                        video; defaults to 12
 
-- ``--ibm`` — Synonym for "``--encoding cp437``" (`CP437
-  <https://en.wikipedia.org/wiki/Code_page_437>`_ is the character encoding
-  used by NetHack's `IBMgraphics <https://nethackwiki.com/wiki/IBMgraphics>`_
-  option)
+--ibm                   Synonym for "``--encoding cp437``" (CP437_ is the
+                        character encoding used by NetHack's IBMgraphics_
+                        option)
 
-- ``--info`` — Instead of converting the ttyrec file to a video, output the
-  ttyrec's total duration and number of screen updates as a JSON object
+--info                  Instead of converting the ttyrec file to a video,
+                        output the ttyrec's total duration and number of screen
+                        updates as a JSON object
 
-- ``--info-all`` — Like ``--info``, but also include a list of the time & byte
-  offsets of each screen update
+--info-all              Like ``--info``, but also include a list of the time &
+                        byte offsets of each screen update
 
-- ``--size <columns> <lines>`` — Set the dimensions of the terminal screen on
-  which the ttyrec was recorded; defaults to 80×24
+--size COLUMNS_LINES    [Specify ``COLUMNS`` and ``LINES`` as separate
+                        arguments] Set the dimensions of the terminal screen on
+                        which the ttyrec was recorded; defaults to 80×24
+
+.. _CP437: https://en.wikipedia.org/wiki/Code_page_437
+.. _IBMgraphics: https://nethackwiki.com/wiki/IBMgraphics
 
 
 Licenses
