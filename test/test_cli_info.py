@@ -9,33 +9,33 @@ def test_cli_info():
     pth = str(DATA_DIR / 'hello.ttyrec')
     r = CliRunner().invoke(main, ['--info', pth])
     assert r.exit_code == 0, r.output
-    assert r.output == '''\
-Reading {} ...
+    assert r.output == f'''\
+Reading {pth} ...
 {{
     "duration": "0:00:42.065535",
     "duration_seconds": 42.065535,
     "update_qty": 3
 }}
-'''.format(pth)
+'''
 
 def test_cli_info_empty():
     pth = str(DATA_DIR / 'empty.ttyrec')
     r = CliRunner().invoke(main, ['--info', pth])
     assert r.exit_code == 0, r.output
-    assert r.output == '''\
-Reading {} ...
+    assert r.output == f'''\
+Reading {pth} ...
 {{
     "duration": null,
     "duration_seconds": null,
     "update_qty": 0
 }}
-'''.format(pth)
+'''
 
 def test_cli_info_short():
     pth = str(DATA_DIR / 'short.ttyrec')
     r = CliRunner().invoke(main, ['--info', pth], standalone_mode=False)
     assert r.exit_code != 0
-    assert r.output == 'Reading {} ...\n'.format(pth)
+    assert r.output == f'Reading {pth} ...\n'
     assert isinstance(r.exception, click.UsageError)
     assert str(r.exception) \
         == 'ttyrec update at offset 18 ended prematurely;'\
